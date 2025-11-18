@@ -1,28 +1,38 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2022",
-    "useDefineForClassFields": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
+    "types": ["vite/client"],
 
-    /* Linting */
+    /* TypeScript Good Practices */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noImplicitAny": true, //Evita que una variable sin tipo se infiera como any
+
+    "noUnusedLocals": true, // =>
+    "noUnusedParameters": true, //Avisan si defino variables o parametros que no uso
+
+    "noFallthroughCasesInSwitch": true, //Evita que en un switch se pase a un case siguiente sin un break
+    "forceConsistentCasingInFileNames": true, //Evita problemas de mayusculas y minusculas en los imports
+    "isolatedModules": true, //Cada archivo se trata como un modulo independiente
+
+    "esModuleInterop": true, // =>
+    "allowSyntheticDefaultImports": true, //  Permite importar modulos comunes de JS
+
+    /* Performance */
+    "skipLibCheck": true, //Evita a typescript verificar lso tipos internos de las librerias (node_modules) ,hace la compilacion mas rapida
+    "noEmit": true, //No genera archivos de salida .js , va perfecto con vite que se encarga de eso
+
+    /* Modern TS / Bundler Mode */
+    "useDefineForClassFields": true, //cambia como se definen las propiedades de clases
+    "moduleDetection": "force", //Obliga a TS a tratar todos los archivos como con import/export como módulos
+    "allowImportingTsExtensions": true, //Permite importar archivos con extensiones .ts y .tsx
+    "verbatimModuleSyntax": true, //Mantiene la sintaxis de los modulos tal cual en la salida
+    "erasableSyntaxOnly": true, //Permite eliminar ciertas sintaxis que solo existen en TS
+    "noUncheckedSideEffectImports": true, //Evita importar modulos que puedan tener efectos secundarios no verificados
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo" //Ubicacion del archivo de informacion de compilacion incremental
   },
   "include": ["src"]
 }

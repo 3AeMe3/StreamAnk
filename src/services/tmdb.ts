@@ -1,8 +1,9 @@
+import type { Movie } from "../interfaces/movie";
+
 export const API_BASE_URL = "https://api.themoviedb.org/3";
+export const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
 
-export const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/original";
-
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string;
 
 const API_OPTIONS: RequestInit = {
   method: "GET",
@@ -12,47 +13,78 @@ const API_OPTIONS: RequestInit = {
   },
 };
 
-export const fetchMoviesByType = async (type: string) => {
+//Helper generico para evitar repetir codigo
+async function fetchFromTMDB<T>(endpoint: string): Promise<T> {
   try {
-    const endPoint = `${API_BASE_URL}/movie/${type}`;
-    const response = await fetch(endPoint, API_OPTIONS);
-    if (!response.ok) throw new Error("Failed to fetch movies");
-    const data = await response.json();
-    return data.results || [];
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, API_OPTIONS);
+    if (!response.ok) throw new Error(`TMDB error : ${response.status}`);
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching movies:", error);
-    return [];
+    console.error(`Error fetching ${endpoint}: `, error);
+    throw error;
   }
-};
+}
 
-export const fetchMovieTrailer = async (movieID: number) => {
-  try {
-    const endPoint = `${API_BASE_URL}/movie/${movieID}/videos`;
-    const response = await fetch(endPoint, API_OPTIONS);
-    if (!response.ok) throw new Error("Failed to fetch movie videos");
-    const data = await response.json();
+//peliculas por tipo => documentacion de TMDB
+export async function fetchMoviesByType(type: string): Promise<Movie[]> {
+  const data = await fetchFromTMDB<{ results: Movie[] }>(`/movie/${type}`);
+  return data.results || [];
+}
 
-    const trailer = data.results.find(
-      (video: { type: string; site: string }) =>
-        video.type === "Trailer" && video.site === "YouTube"
-    );
+export async function fetchTrendingByType(type: string): Promise<Movie[]> {
+  const data = await fetchFromTMDB<{ results: Movie[] }>(
+    `/trending/${type}/day`
+  );
+  return data.results || [];
+}
 
-    return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
-  } catch (error) {
-    console.error("Error fetching movie trailer:", error);
-    return null;
-  }
-};
+//trailer movies(youtube)
+interface Video {
+  key: string;
+  type: string;
+  site: string;
+}
 
-export const fetchTrendingByType = async (type: string) => {
-  try {
-    const endPoint = `${API_BASE_URL}/trending/${type}/day`;
-    const response = await fetch(endPoint, API_OPTIONS);
-    if (!response.ok) throw new Error(`Failed to fetch trending ${type} `);
-    const data = await response.json();
-    return data.results || [];
-  } catch (error) {
-    console.error("Error fetching trending movies:", error);
-    return [];
-  }
-};
+export async function fetchMovieTrailer(
+  movieID: number
+): Promise<string | null> {
+  const data = await fetchFromTMDB<{ results: Video[] }>(
+    `/movie/${movieID}/videos`
+  );
+  const trailer = data.results.find(
+    (video) => video.type === "Trailer" && video.site === "YouTube"
+  );
+  return trailer ? `https://youtube.com/watch?v=${trailer.key}` : null;
+}
+
+interface Credit {
+  id: number;
+  name: string;
+  character: string;
+  profile_path: string | null;
+}
+
+export async function fetchCredits(movieId: number): Promise<Credit[]> {
+  const data = await fetchFromTMDB<{ cast: Credit[] }>(
+    `/movie/${movieId}/credits`
+  );
+  return data.cast;
+}
+
+export async function fetchSimilarMovies(movieId: number): Promise<Movie[]> {
+  const data = await fetchFromTMDB<{ results: Movie[] }>(
+    `/movie/${movieId}/similar`
+  );
+  return data.results;
+}
+
+export async function fetchFindByID(id: number): Promise<Movie> {
+  return await fetchFromTMDB<Movie>(`/movie/${id}`);
+}
+
+export async function fetchBySearch(query: string): Promise<Movie[]> {
+  const data = await fetchFromTMDB<{ results: Movie[] }>(
+    `/search/movie?query=${encodeURIComponent(query)}`
+  );
+  return data.results;
+}

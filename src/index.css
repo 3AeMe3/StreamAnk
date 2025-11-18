@@ -6,20 +6,9 @@
   --title-font: "Bebas Neue", cursive;
   --body-font: "Poppins", sans-serif;
 
-  --color-primary: #030014;
-
-  --color-light-100: #cecefb;
-  --color-light-200: #a8b5db;
-
-  --color-gray-100: #9ca4ab;
-
-  --color-dark-100: #0f0d23;
-
-  --font-dm-sans: DM Sans, sans-serif;
+  --color-purple: oklch(60.6% 0.25 292.717);
 
   --breakpoint-xs: 480px;
-
-  --background-image-hero-pattern: url("/hero-bg.png");
 }
 
 @layer base {
@@ -49,18 +38,13 @@
   -ms-overflow-style: none; /* IE y Edge */
   scrollbar-width: none; /* Firefox */
 }
-/* bg-linear-to-r from-violet-300 to-violet-500 bg-clip-text  text-transparent */
-.text-outline-red {
-  color: black;
+/*  */
+.text-outline-purple {
   -webkit-text-stroke: 2px oklch(60.6% 0.25 292.717);
-  letter-spacing: -7px;
 }
-/* .text-outline-red::after {
-  content: "";
-  position: absolute;
-  min-height: 100%;
-  width: 6px;
-  right: -6px;
-  background-color: #0d0d0d;
-  box-shadow: 1px 1px 5px 3px #0d0d0d;
-} */
+
+.slick-prev:before,
+.slick-next:before {
+  content: "" !important; /* elimina el texto por defecto */
+  display: none !important;
+}

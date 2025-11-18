@@ -10,6 +10,7 @@ interface ButtonProps {
   iconSize?: number;
   iconColor?: string;
   iconFill?: string;
+  play?: boolean;
 }
 
 const sizeMap = {
@@ -26,18 +27,19 @@ export default function Button({
   Icon,
   iconSize = 12,
   iconColor,
-  iconFill,
+  iconFill = "transparent",
   shape,
+  play,
 }: ButtonProps) {
   const isCircle = shape === "circle";
   return (
     <button
       onClick={onHandleClick}
-      className={`  flex justify-center items-center backdrop-blur-xl  gap-1 border-1 border-white/30 bg-black/30 ${
-        isCircle ? "rounded-full" : "rounded-xl"
-      } ${isCircle ? "aspect-square p-2 bg-white" : "px-2 py-[3px] gap-2"}   ${
-        sizeMap[size]
-      }`}
+      className={`  flex justify-center items-center  gap-1 cursor-pointer backdrop-blur-sm  border-1 border-white/25 bg-black/20 hover:scale-105 ${
+        play && "bg-white"
+      }    ${isCircle ? "rounded-full" : "rounded-xl"} ${
+        isCircle ? "aspect-square p-2 " : "px-2 py-[3px] gap-2"
+      }   ${sizeMap[size]}`}
     >
       {Icon && <Icon size={iconSize} color={iconColor} fill={iconFill} />}
 
