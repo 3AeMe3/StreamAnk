@@ -1,16 +1,22 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { CalendarDays, Star, Play, Info } from "lucide-react";
+import { CalendarDays, Star, Play, Info, type LucideIcon } from "lucide-react";
 import Slider from "react-slick";
 
 import VideoWindow from "../movie/VideoWindow";
 import Button from "../ui/Button";
 import { IMAGE_BASE_URL } from "../../services/tmdb";
-import type { Movie, IconProps } from "../../interfaces/movie";
+import type { Movie } from "../../interfaces/movie";
 import { useMovieDetails } from "../../hooks/useMovieDetails";
 
 interface HeroProps {
   heroMovies?: Movie[];
+}
+interface HeroTagProps {
+  Icon?: LucideIcon;
+  iconFill?: string;
+  iconColor?: string;
+  children: React.ReactNode;
 }
 
 export default function Hero({ heroMovies }: HeroProps) {
@@ -32,7 +38,7 @@ export default function Hero({ heroMovies }: HeroProps) {
     const { find } = useMovieDetails(movie.id.toString());
     const { trailer } = useMovieDetails(movie.id.toString());
 
-    const Tag = ({ Icon, iconFill, iconColor, children }: IconProps) => (
+    const Tag = ({ Icon, iconFill, iconColor, children }: HeroTagProps) => (
       <span
         className={`  flex justify-center items-center  gap-1 rounded-xl px-2 text-sm backdrop-blur-sm  border-1 border-white/25 bg-black/20  `}
       >

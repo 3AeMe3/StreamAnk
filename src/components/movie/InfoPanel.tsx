@@ -1,6 +1,6 @@
 import { CalendarDays, Clock, Star, Play, Plus, Download } from "lucide-react";
 import { vote_avergate } from "../../utils/formatters";
-import type { IconProps } from "../../interfaces/movie";
+import type { IconProps, TagProps } from "../../interfaces/movie";
 
 import Button from "../ui/Button";
 
@@ -16,6 +16,7 @@ interface InfoPanelProps {
   age?: string;
   time?: string;
   score: number;
+  trailer: string;
 }
 
 export default function InfoPanel({
@@ -25,6 +26,7 @@ export default function InfoPanel({
   age,
   time,
   score,
+  trailer,
 }: InfoPanelProps) {
   const IconText = ({
     Icon,
@@ -37,9 +39,11 @@ export default function InfoPanel({
     </span>
   );
 
-  const Tag = ({ text }: { text: string }) => (
+  const Tag = ({ text }: TagProps) => (
     <span className=" rounded-xl px-2 py-[0.15rem] bg-white/15">{text}</span>
   );
+
+  const watchTrailer = trailer.replace("embed/", "watch?v=");
 
   return (
     <div className="absolute bottom-0 flex flex-col gap-2 mb-3 px-20">
@@ -64,7 +68,10 @@ export default function InfoPanel({
           iconColor="black"
           shape="circle"
           play
-        ></Button>
+          onHandleClick={() => window.open(watchTrailer, "_blank")}
+        >
+          <a href={trailer} target="_blank"></a>
+        </Button>
         <Button Icon={Plus} shape="circle"></Button>
         <Button Icon={Download} shape="circle"></Button>
         <button className="rounded-md px-2 py-[0.15rem] border-1 border-white/30 text-[0.7rem] bg-black/5">

@@ -3,10 +3,13 @@ import Hero from "./components/layout/Hero";
 import Movies from "./components/layout/Movies";
 import Footer from "./components/layout/Footer";
 import { useMovies } from "./hooks/useMovies";
+import { useEffect, useState } from "react";
+import Loading from "./components/common/Loading";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
-    isLoading,
     errorMessage,
     popularMovies,
     topRatedMovies,
@@ -15,27 +18,27 @@ function App() {
     trendingMovies,
   } = useMovies();
 
-  if (isLoading) return <div>Loading...</div>;
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+  }, []);
+
+  if (isLoading) return <Loading />;
   return (
     <>
-      {!isLoading ? (
-        <>
-          <Navbar></Navbar>
-          <main>
-            <Hero heroMovies={popularMovies} />
-            <Movies
-              trendingMovies={trendingMovies}
-              topRatedMovies={topRatedMovies}
-              upcomingMovies={upcomingMovies}
-              nowPlaying={nowPlaying}
-              errorMessage={errorMessage}
-            />
-          </main>
-          <Footer />
-        </>
-      ) : (
-        "Loading...."
-      )}
+      <Navbar></Navbar>
+      <main>
+        <Hero heroMovies={popularMovies} />
+        <Movies
+          trendingMovies={trendingMovies}
+          topRatedMovies={topRatedMovies}
+          upcomingMovies={upcomingMovies}
+          nowPlaying={nowPlaying}
+          errorMessage={errorMessage}
+        />
+      </main>
+      <Footer />
     </>
   );
 }

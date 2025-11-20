@@ -11,6 +11,7 @@ interface ButtonProps {
   iconColor?: string;
   iconFill?: string;
   play?: boolean;
+  children?: React.ReactNode;
 }
 
 const sizeMap = {
@@ -30,6 +31,7 @@ export default function Button({
   iconFill = "transparent",
   shape,
   play,
+  children,
 }: ButtonProps) {
   const isCircle = shape === "circle";
   return (
@@ -44,6 +46,7 @@ export default function Button({
       {Icon && <Icon size={iconSize} color={iconColor} fill={iconFill} />}
 
       {text}
+      {children}
     </button>
   );
 }

@@ -7,7 +7,7 @@ import { IMAGE_BASE_URL } from "../services/tmdb";
 import { useMovieDetails } from "../hooks/useMovieDetails";
 import MovieGrid from "../components/movie/MovieGrid";
 
-import portrait from "../assets/images/portraitNoImage.png";
+import portrait from "../assets/images/portraitNoImage.webp";
 
 export default function MovieDetail() {
   const { id } = useParams<{ id: string }>();
@@ -38,11 +38,12 @@ export default function MovieDetail() {
 
   return (
     <>
-      <div className="relative  h-[80vh]   ">
+      <div className="relative  h-[80vh] overflow-hidden   ">
         <div className="h-full mask-b-from-90% mask-b-to-100%">
           <iframe
-            width="100%"
-            height="100%"
+            className="absolute -bottom-40"
+            width="1920"
+            height="1080"
             allow="autoplay;muted"
             src={String(trailerUrl)}
             title="Movie trailer"
@@ -50,7 +51,7 @@ export default function MovieDetail() {
         </div>
 
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 px-5 ">
-          <div className="flex justify-between items-center mt-5">
+          <div className="flex mx-20 justify-between items-center mt-5">
             <Button
               Icon={MoveLeft}
               iconSize={30}
@@ -66,6 +67,7 @@ export default function MovieDetail() {
             age={releaseYear}
             time={duration}
             score={find?.vote_average}
+            trailer={String(trailerUrl)}
           />
         </div>
       </div>
@@ -76,7 +78,7 @@ export default function MovieDetail() {
 
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 ">
           {credits.slice(0, 12).map((credit) => (
-            <div className="group">
+            <div key={credit.id} className="group">
               <article
                 key={credit.id}
                 className="bg-[#151515] border-1 border-white/10 rounded-lg pt-3 px-3 flex gap-3  group-hover:transition group-hover:duration-500 group-hover:border-indigo-600 "
@@ -88,7 +90,7 @@ export default function MovieDetail() {
                   onError={(e) => (e.currentTarget.src = portrait)}
                 />
                 <div className="flex flex-col justify-center   text-sm">
-                  <h3 className="text-xl font-semibold group-hover:text-indigo-600 group-hover:transition group-hover:duration-500">
+                  <h3 className="text-xl font-semibold group-hover:text-indigo-600 group-hover:transition group-hover:duration-300">
                     {credit.name}
                   </h3>
                   <span className="text-md text-gray-300">

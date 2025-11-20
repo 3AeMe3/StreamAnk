@@ -32,8 +32,11 @@ export interface CastMember {
 }
 
 export interface IconProps {
-  Icon?: LucideIcon;
+  Icon: LucideIcon;
   children?: React.ReactNode;
   iconFill?: string;
   iconColor?: string;
+}
+export interface TagProps {
+  text: string;
 }
