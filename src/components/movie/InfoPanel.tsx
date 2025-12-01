@@ -4,7 +4,7 @@ import type { IconProps, TagProps } from "../../interfaces/movie";
 
 import Button from "../ui/Button";
 
-interface Gender {
+interface Genre {
   id: number;
   name: string;
 }
@@ -12,7 +12,7 @@ interface Gender {
 interface InfoPanelProps {
   title: string;
   description: string;
-  genres?: Gender[];
+  genres?: Genre[];
   age?: string;
   time?: string;
   score: number;
@@ -45,8 +45,10 @@ export default function InfoPanel({
 
   const watchTrailer = trailer.replace("embed/", "watch?v=");
 
+  const shortDescription = description.slice(0, 400).concat("...");
+
   return (
-    <div className="absolute bottom-0 flex flex-col gap-2 mb-3 px-20">
+    <div className="absolute bottom-0 flex flex-col gap-2 mb-3 mx-2 xl:mx-20">
       <h1 className="lg:text-5xl">{title}</h1>
       <div className="flex gap-2">
         <IconText Icon={CalendarDays}>{age}</IconText>
@@ -60,7 +62,7 @@ export default function InfoPanel({
           <Tag key={genre.id} text={genre?.name} />
         ))}
       </div>
-      <p className="text-sm max-w-xl">{description}</p>
+      <p className="text-sm max-w-xl line-clamp-3 ">{shortDescription}</p>
       <div className="flex  items-center gap-2">
         <Button
           Icon={Play}
@@ -69,9 +71,7 @@ export default function InfoPanel({
           shape="circle"
           play
           onHandleClick={() => window.open(watchTrailer, "_blank")}
-        >
-          <a href={trailer} target="_blank"></a>
-        </Button>
+        ></Button>
         <Button Icon={Plus} shape="circle"></Button>
         <Button Icon={Download} shape="circle"></Button>
         <button className="rounded-md px-2 py-[0.15rem] border-1 border-white/30 text-[0.7rem] bg-black/5">

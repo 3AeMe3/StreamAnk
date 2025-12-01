@@ -3,6 +3,7 @@ import { fetchMoviesByType, fetchTrendingByType } from "../services/tmdb";
 import type { Movie } from "../interfaces/movie";
 
 export const useMovies = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [popularMovies, setPopularMovies] = useState<Movie[]>([]);
   const [topRatedMovies, setTopRatedMovies] = useState<Movie[]>([]);
@@ -12,7 +13,7 @@ export const useMovies = () => {
 
   useEffect(() => {
     const fetchAllMovies = async () => {
-    
+      setIsLoading(true);
       setErrorMessage("");
       try {
         const [popular, topRated, upcoming, nowPlaying, trendingMovie] =
@@ -33,13 +34,14 @@ export const useMovies = () => {
           ` Failed to fetch movies. Please try again later.: ${error}`
         );
       } finally {
-     
+        setIsLoading(false);
       }
     };
     fetchAllMovies();
   }, []);
 
   return {
+    isLoading,
     errorMessage,
     popularMovies,
     topRatedMovies,

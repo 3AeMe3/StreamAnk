@@ -18,14 +18,14 @@ export default function MovieGrid({
   return (
     <>
       <div
-        className={` relative  w-50 overflow-hidden  group transition-all duration-300  hover:z-10 `}
+        className={` relative  m-2 overflow-hidden  group transition-all duration-300  hover:z-10 `}
         onClick={onHandleClick}
       >
         <img
           src={image}
           alt={title}
           onError={(e) => (e.currentTarget.src = placeholderImage)}
-          className="w-full h-full object-cover transition-all duration-300 hover:scale-110  hover:brightness-70 "
+          className="w-full xl:w-full object-cover transition-all duration-300 hover:scale-110  hover:brightness-70  "
           loading="lazy"
         />
 

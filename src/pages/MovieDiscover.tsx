@@ -1,63 +1,61 @@
-import Navbar from "../components/layout/Navbar";
 import { useEffect, useState } from "react";
-import { fetchBySearch, IMAGE_BASE_URL } from "../services/tmdb";
 import { useNavigate } from "react-router";
-import type { Movie } from "../interfaces/movie";
-
 import { useDebounce } from "react-use";
+
+import { fetchBySearch, IMAGE_BASE_URL } from "../services/tmdb";
+import type { Movie } from "../interfaces/movie";
 import { Search } from "lucide-react";
+
+import Navbar from "../components/layout/Navbar";
 import MovieGrid from "../components/movie/MovieGrid";
+import SEO from "../components/common/SEO";
 
 export default function MovieDiscover() {
   const [findMovie, setFindMovie] = useState<Movie[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+
   const navigation = useNavigate();
 
   useDebounce(() => setDebouncedSearchTerm(searchTerm), 500, [searchTerm]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (!debouncedSearchTerm) return;
+    if (!debouncedSearchTerm) return;
 
-      try {
-        const data = await fetchBySearch(debouncedSearchTerm);
-        setFindMovie(data);
-      } catch (error) {
-        console.log("error fetching movies:", error);
-      }
-    };
-    fetchData();
+    fetchBySearch(debouncedSearchTerm)
+      .then(setFindMovie)
+      .catch((err) => console.log(err));
   }, [debouncedSearchTerm]);
 
-  const queryValue = debouncedSearchTerm || "";
+  const queryValue = debouncedSearchTerm;
+
+  const description = "Search through thousands of movies";
 
   return (
     <>
+      <SEO title="Search - StreamANK" description={description}></SEO>
       <Navbar />
-
       <section className="px-5 flex h-[50vh] flex-col justify-end items-center mb-10 gap-10 ">
         <div className="px-5 flex flex-col items-center">
           <h1 className="font-normal text-3xl text-center lg:text-6xl">
-            <span className="title bg-linear-to-r from-violet-200  to-violet-500 bg-clip-text  text-transparent ">
+            <span className="title bg-linear-to-r from-violet-200  to-violet-500 bg-clip-text  text-transparent mr-2 ">
               Discover
-            </span>{" "}
+            </span>
             Your Next Favorite
           </h1>
-          <p className="font-light text-sm mt-2 text-white/70">
-            Search through thousands of movies, TV shows, and anime series
-          </p>
+          <p className="font-light text-md mt-2 text-white/70">{description}</p>
         </div>
         <div className="relative flex flex-col w-full gap-3 p-3 rounded-xl my-4 max-w-4/5 lg:max-w-2/5">
           {/* Lupa */}
           <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-white/60 pointer-events-none" />
-
-          <input
-            className="border-1 border-white/50 rounded-lg placeholder-white/50 px-12 py-4 bg-transparent"
-            placeholder="Type here to search.."
-            type="search"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input
+              className="border-1 border-white/50 rounded-lg placeholder-white/50 px-12 py-4 bg-transparent w-full"
+              placeholder="Type here to search.."
+              type="search"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
         </div>
       </section>
       <section className="px-5  lg:px-75 ">

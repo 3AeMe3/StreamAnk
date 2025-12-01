@@ -17,9 +17,9 @@ export default function VideoWindow({
       aria-modal="true"
       aria-label="Movie Trailer"
     >
-      <div className="relative w-[90%] h-[80%] max-w-7xl" onClick={(e) => e.stopPropagation()}>
+      <div className="relative w-[90%] h-[40%] xl:h-[90%] " onClick={(e) => e.stopPropagation()}>
         <iframe
-          className="w-[1920] h-full rounded-lg"
+          className="w-full h-full rounded-lg"
           src={videoUrl}
           title="Trailer"
           allowFullScreen

@@ -6,8 +6,9 @@ import Button from "../components/ui/Button";
 import { IMAGE_BASE_URL } from "../services/tmdb";
 import { useMovieDetails } from "../hooks/useMovieDetails";
 import MovieGrid from "../components/movie/MovieGrid";
-
-import portrait from "../assets/images/portraitNoImage.webp";
+import Actors from "../components/movie/Actors";
+import Loading from "../components/common/Loading";
+import SEO from "../components/common/SEO";
 
 export default function MovieDetail() {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +16,7 @@ export default function MovieDetail() {
   const { credits, similar, trailer, find, isLoading, errorMessage } =
     useMovieDetails(id);
 
-  if (isLoading) return <p className="text-center mt-10">Cargando...</p>;
+  if (isLoading) return <Loading />;
 
   if (errorMessage)
     return <p className="text-red-500  mt-10">{errorMessage}</p>;
@@ -27,9 +28,7 @@ export default function MovieDetail() {
       "",
       `?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&vq=hd1080`
     );
-
-  const description = find.overview?.slice(0, 141).concat("...");
-  const releaseYear = find.release_date?.slice(0, 4);
+  const releaseYear = find.release_date?.slice(0, 4) ?? "N/A";
 
   const runtime = find.runtime ?? 0;
   const hours = Math.floor(runtime / 60);
@@ -38,20 +37,31 @@ export default function MovieDetail() {
 
   return (
     <>
+      <SEO
+        title={find.title}
+        description={find.overview}
+        url={String(trailerUrl)}
+      ></SEO>
       <div className="relative  h-[80vh] overflow-hidden   ">
         <div className="h-full mask-b-from-90% mask-b-to-100%">
-          <iframe
-            className="absolute -bottom-40"
-            width="1920"
-            height="1080"
-            allow="autoplay;muted"
-            src={String(trailerUrl)}
-            title="Movie trailer"
-          ></iframe>
+          {trailer ? (
+            <iframe
+              className="absolute -bottom-40"
+              width="1920"
+              height="1080"
+              allow="autoplay; muted; encrypted-media"
+              src={String(trailerUrl)}
+              title="Movie trailer"
+            ></iframe>
+          ) : (
+            <p className="flex justify-center items-center h-full text-2xl text-red-500">
+              No video available to display :(
+            </p>
+          )}
         </div>
 
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 px-5 ">
-          <div className="flex mx-20 justify-between items-center mt-5">
+          <div className="flex mx-2 justify-between items-center mt-5  xl:mx-20">
             <Button
               Icon={MoveLeft}
               iconSize={30}
@@ -63,7 +73,7 @@ export default function MovieDetail() {
           <InfoPanel
             genres={find?.genres}
             title={find.title}
-            description={description}
+            description={find.overview}
             age={releaseYear}
             time={duration}
             score={find?.vote_average}
@@ -73,53 +83,31 @@ export default function MovieDetail() {
       </div>
 
       {/*Actors*/}
-      <section className="  pt-5  mx-20">
-        <h3 className="text-2xl my-4 font-medium">Actors</h3>
-
-        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 ">
-          {credits.slice(0, 12).map((credit) => (
-            <div key={credit.id} className="group">
-              <article
-                key={credit.id}
-                className="bg-[#151515] border-1 border-white/10 rounded-lg pt-3 px-3 flex gap-3  group-hover:transition group-hover:duration-500 group-hover:border-indigo-600 "
-              >
-                <img
-                  src={`${IMAGE_BASE_URL}w300/${credit.profile_path}`}
-                  alt={credit.name}
-                  className="h-25 rounded-t-lg "
-                  onError={(e) => (e.currentTarget.src = portrait)}
-                />
-                <div className="flex flex-col justify-center   text-sm">
-                  <h3 className="text-xl font-semibold group-hover:text-indigo-600 group-hover:transition group-hover:duration-300">
-                    {credit.name}
-                  </h3>
-                  <span className="text-md text-gray-300">
-                    {credit.character}
-                  </span>
-                </div>
-              </article>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Actors credits={credits} />
 
       {/*Peliculas Similars*/}
-      <section className=" pt-5 px-5 mx-20 ">
+      <section className="   pt-5  mx-5 xl:mx-20">
         <h3 className=" text-2xl my-4 font-medium">You may like</h3>
-        <div className="grid grid-cols-2  lg:grid-cols-8 lg:gap-3">
-          {similar.map((movie) => (
-            <MovieGrid
-              key={movie.id}
-              title={movie.title}
-              image={`${IMAGE_BASE_URL}w300${movie.poster_path}`}
-              score={`${movie.vote_average.toFixed(1)}/10`}
-              tag="Movie"
-              onHandleClick={() =>
-                navigate(`/movie/${movie?.id}`, { state: { movie } })
-              }
-            />
-          ))}
-        </div>
+        {similar.length !== 0 ? (
+          <div className="grid grid-cols-2  lg:grid-cols-8 lg:gap-3">
+            {similar.map((movie) => (
+              <MovieGrid
+                key={movie.id}
+                title={movie.title}
+                image={`${IMAGE_BASE_URL}w300${movie.poster_path}`}
+                score={`${movie.vote_average.toFixed(1)}/10`}
+                tag="Movie"
+                onHandleClick={() =>
+                  navigate(`/movie/${movie?.id}`, { state: { movie } })
+                }
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="h-40 flex justify-center items-center text-lg text-red-400">
+            It seems there is nothing to show.
+          </p>
+        )}
       </section>
     </>
   );

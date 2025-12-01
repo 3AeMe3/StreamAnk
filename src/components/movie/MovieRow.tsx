@@ -32,7 +32,7 @@ const settings = {
     {
       breakpoint: 1024,
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 4,
         slidesToScroll: 3,
         infinite: true,
         dots: true,
@@ -60,27 +60,27 @@ export default function MovieRow({ title, typeMovies = [] }: MovieRowProps) {
   const navigate = useNavigate();
 
   return (
-    <div className=" px-45 my-10 lg: lg:my-20">
-      <div className="flex justify-between relative  ">
+    <div className=" px-10 my-10 lg:px-35 xl:px-45">
+      <div className="flex justify-between relative">
         <h3 className="font-bold lg:text-2xl">
           <span className="w-1 h-1 bg-violet-500 text-violet-500">|</span>{" "}
           {title}
         </h3>
       </div>
-      <div className="my-8 ">
+
+      <div className="my-8">
         <Slider {...settings}>
           {typeMovies?.slice(0, 10).map((movie) => (
-            <div className="px-2">
+            <div key={movie.id} className="px-2 !w-auto">
               <MovieCard
-                key={movie.id}
                 title={movie.title}
                 tag="Movie"
-                rating={` ${movie.vote_average.toFixed(1)}/10`}
-                image={`${IMAGE_BASE_URL}w300${movie.poster_path} `}
+                rating={`${movie.vote_average.toFixed(1)}/10`}
+                image={`${IMAGE_BASE_URL}w300${movie.poster_path}`}
                 handleClick={() =>
                   navigate(`/movie/${movie?.id}`, { state: { movie } })
                 }
-              ></MovieCard>
+              />
             </div>
           ))}
         </Slider>

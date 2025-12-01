@@ -23,7 +23,7 @@ export default function MovieCard({
 }: MovieCardProps) {
   return (
     <div
-      className={`relative w-40  group transition-all duration-300  hover:z-10 hover:scale-105 cursor-pointer xl:w-50`}
+      className={`relative  group transition-all duration-300  hover:z-10 hover:scale-105 cursor-pointer xl:w-50`}
       onClick={handleClick}
     >
       <img
