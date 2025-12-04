@@ -1,3 +1,5 @@
+import { useRef, type ReactEventHandler } from "react";
+
 import { CalendarDays, Clock, Star, Play, Plus, Download } from "lucide-react";
 import { vote_avergate } from "../../utils/formatters";
 import type { IconProps, TagProps } from "../../interfaces/movie";
@@ -17,6 +19,7 @@ interface InfoPanelProps {
   time?: string;
   score: number;
   trailer: string;
+  scrollToSimilarMovies: () => void;
 }
 
 export default function InfoPanel({
@@ -27,6 +30,7 @@ export default function InfoPanel({
   time,
   score,
   trailer,
+  scrollToSimilarMovies,
 }: InfoPanelProps) {
   const IconText = ({
     Icon,
@@ -74,9 +78,9 @@ export default function InfoPanel({
         ></Button>
         <Button Icon={Plus} shape="circle"></Button>
         <Button Icon={Download} shape="circle"></Button>
-        <button className="rounded-md px-2 py-[0.15rem] border-1 border-white/30 text-[0.7rem] bg-black/5">
+        <Button size="sm" onHandleClick={scrollToSimilarMovies}>
           Similars
-        </button>
+        </Button>
       </div>
     </div>
   );

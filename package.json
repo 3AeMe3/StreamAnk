@@ -17,6 +17,7 @@
     "react-head": "^3.4.2",
     "react-router": "^7.9.4",
     "react-use": "^17.6.0",
+    "react-youtube": "^10.1.0",
     "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
