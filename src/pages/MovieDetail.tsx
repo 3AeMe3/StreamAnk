@@ -12,6 +12,7 @@ import MovieGrid from "../components/movie/MovieGrid";
 import Actors from "../components/movie/Actors";
 import Loading from "../components/common/Loading";
 import SEO from "../components/common/SEO";
+import Footer from "../components/layout/Footer";
 
 export default function MovieDetail() {
   const [player, setPlayer] = useState<any>(null);
@@ -26,15 +27,14 @@ export default function MovieDetail() {
 
   if (isLoading) return <Loading />;
 
-  if (errorMessage)
-    return <p className="text-red-500  mt-10">{errorMessage}</p>;
+  if (errorMessage) return <p className="mt-10 text-red-500">{errorMessage}</p>;
   if (!find) return null;
 
   const trailerUrl = trailer
     ?.replace("watch?v=", "embed/")
     .concat(
       "",
-      `?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&vq=hd1080`
+      `?autoplay=1&mute=1&loop=1&controls=0&modestbranding=1&rel=0&vq=hd1080`,
     );
 
   const scrollToSimilarMovies = () => {
@@ -101,25 +101,25 @@ export default function MovieDetail() {
         description={find.overview}
         url={String(trailerUrl)}
       ></SEO>
-      <div className="relative  h-[80vh] overflow-hidden   ">
+      <div className="relative h-[80vh] overflow-hidden">
         <div className="h-full mask-b-from-90% mask-b-to-100%">
           {trailerId ? (
             <YouTube
               videoId={trailerId}
               opts={opts}
               onReady={onPlayerReady}
-              className="absolute bottom-40   h-full w-full "
+              className="absolute bottom-40 h-full w-full"
               iframeClassName=""
             />
           ) : (
-            <p className="flex justify-center items-center h-full text-2xl text-red-500">
+            <p className="flex h-full items-center justify-center text-2xl text-red-500">
               No video available to display :(
             </p>
           )}
         </div>
 
-        <div className="absolute top-0 left-0 w-full h-full bg-black/30 px-5 ">
-          <div className="flex mx-2 justify-between items-center mt-5  xl:mx-20">
+        <div className="absolute top-0 left-0 h-full w-full bg-black/30 px-5">
+          <div className="mx-2 mt-5 flex items-center justify-between xl:mx-20">
             <Button
               Icon={MoveLeft}
               iconSize={30}
@@ -150,10 +150,10 @@ export default function MovieDetail() {
       <Actors credits={credits} />
 
       {/*Peliculas Similars*/}
-      <section ref={similarMoviesRef} className=" pt-5  mx-5 xl:mx-20">
-        <h3 className=" text-2xl my-4 font-medium">You may like</h3>
+      <section ref={similarMoviesRef} className="mx-5 pt-5 xl:mx-20">
+        <h3 className="my-4 text-2xl font-medium">You may like</h3>
         {similar.length !== 0 ? (
-          <div className="grid grid-cols-2  lg:grid-cols-8 lg:gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-8 lg:gap-3">
             {similar.map((movie) => (
               <MovieGrid
                 key={movie.id}
@@ -168,11 +168,13 @@ export default function MovieDetail() {
             ))}
           </div>
         ) : (
-          <p className="h-40 flex justify-center items-center text-lg text-red-400">
+          <p className="flex h-40 items-center justify-center text-lg text-red-400">
             It seems there is nothing to show.
           </p>
         )}
       </section>
+
+      <Footer />
     </>
   );
 }

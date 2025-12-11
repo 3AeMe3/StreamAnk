@@ -37,9 +37,7 @@ export default function Hero({ heroMovies }: HeroProps) {
 
   // Componente pequeño para tags del Hero
   const Tag = ({ Icon, iconFill, iconColor, children }: HeroTagProps) => (
-    <span
-      className="flex justify-center items-center gap-1 rounded-xl px-2 text-sm backdrop-blur-sm border border-white/25 bg-black/20"
-    >
+    <span className="flex items-center justify-center gap-1 rounded-xl border border-white/25 bg-black/20 px-2 text-sm backdrop-blur-sm">
       {Icon && <Icon size={12} color={iconColor} fill={iconFill} />}
       {children}
     </span>
@@ -57,17 +55,16 @@ export default function Hero({ heroMovies }: HeroProps) {
     return (
       <div className="relative h-[85vh]" key={movie.id}>
         <img
-          className="h-full w-full object-cover object-center brightness-60 
-                     mask-y-from-90% mask-y-to-black-90% mask-l-from-70%"
+          className="mask-y-to-black-90% h-full w-full mask-y-from-90% mask-l-from-70% object-cover object-center brightness-60"
           src={`${IMAGE_BASE_URL}original${movie.backdrop_path}`}
           alt={movie.title}
           loading="lazy"
         />
 
         <div className="absolute bottom-20 px-3 lg:px-65">
-          <h1 className="text-4xl font-bold mb-2 lg:text-5xl">{movie.title}</h1>
+          <h1 className="mb-2 text-4xl font-bold lg:text-5xl">{movie.title}</h1>
 
-          <div className="flex gap-2 mb-4">
+          <div className="mb-4 flex gap-2">
             <Tag Icon={Star} iconColor="yellow" iconFill="#facc15">
               {movie.vote_average.toFixed(1)}/10
             </Tag>
@@ -81,7 +78,7 @@ export default function Hero({ heroMovies }: HeroProps) {
             ))}
           </div>
 
-          <p className="text-gray-300 text-lg/6 mb-4 lg:w-2/5">
+          <p className="mb-4 text-lg/6 text-gray-300 lg:w-2/5">
             {movie.overview.slice(0, 150)}...
           </p>
 

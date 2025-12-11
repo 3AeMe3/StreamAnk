@@ -31,7 +31,7 @@ export const useMovies = () => {
         setTrendingMovies(trendingMovie);
       } catch (error) {
         setErrorMessage(
-          ` Failed to fetch movies. Please try again later.: ${error}`
+          ` Failed to fetch movies. Please try again later.: ${error}`,
         );
       } finally {
         setIsLoading(false);

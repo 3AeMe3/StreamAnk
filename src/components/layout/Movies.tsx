@@ -27,7 +27,7 @@ export default function Movies({
   return (
     <section>
       {errorMessage ? (
-        <p className="text-center text-red-400 text-xl my-8">{errorMessage}</p>
+        <p className="my-8 text-center text-xl text-red-400">{errorMessage}</p>
       ) : (
         <div className="slider-container">
           {movieSection.map(({ title, Component, movie }) => (

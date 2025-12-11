@@ -4,7 +4,6 @@ import placeholderImage from "../../assets/images/noImage.jpg";
 interface MovieCardProps {
   title: string;
   image: string;
-  tag?: string;
   rating: string;
 
   top10?: boolean;
@@ -17,13 +16,12 @@ export default function MovieCard({
   image,
   top10 = false,
   topIndex,
-  tag,
   handleClick,
   rating: score,
 }: MovieCardProps) {
   return (
     <div
-      className={`relative  group transition-all duration-300  hover:z-10 hover:scale-105 cursor-pointer xl:w-50`}
+      className={`group relative cursor-pointer transition-all duration-300 hover:z-10 hover:scale-105 xl:w-50`}
       onClick={handleClick}
     >
       <img
@@ -35,15 +33,11 @@ export default function MovieCard({
       />
 
       {/* Overlay */}
-      <div
-        className="absolute inset-x-0 bottom-0 text-white translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 
-                transition-all ease-out flex flex-col justify-end p-3 pb-2 duration-500 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
-      >
-        <h3 className="text-white text-sm md:text-base font-semibold leading-tight line-clamp-2">
+      <div className="absolute inset-x-0 bottom-0 flex translate-y-full flex-col justify-end bg-gradient-to-t from-black/80 via-black/20 to-transparent p-3 pb-2 text-white opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        <h3 className="line-clamp-2 text-sm leading-tight font-semibold text-white md:text-base">
           {title}
         </h3>
-        <div className="flex justify-between items-center text-xs md:text-sm font-light mt-1">
-          <span>{tag}</span>
+        <div className="mt-1 flex items-center justify-between text-xs font-light md:text-sm">
           <span className="flex items-center gap-1">
             <Star size={13} fill="red" color="red" />
             {score}
@@ -52,7 +46,7 @@ export default function MovieCard({
       </div>
 
       {top10 && (
-        <span className="text-black absolute  text-outline-purple top-2  left-1 font-bold text-4xl leading-none select-none group-hover:text-purple group-hover:transition-colors group-hover:duration-100  ">
+        <span className="text-outline-purple group-hover:text-purple absolute top-2 left-1 text-4xl leading-none font-bold text-black select-none group-hover:transition-colors group-hover:duration-100">
           {topIndex}
         </span>
       )}

@@ -11,7 +11,7 @@ export default function NextArrow({ className, onClick, style }: any) {
     >
       <ChevronRight
         size={30}
-        className="  text-white/50 transition-all ease-in-out hover:scale-125  hover:duration-500 hover:text-white   "
+        className="text-white/50 transition-all ease-in-out hover:scale-125 hover:text-white hover:duration-500"
       />
     </button>
   );

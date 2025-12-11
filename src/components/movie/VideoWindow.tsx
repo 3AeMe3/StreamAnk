@@ -11,15 +11,18 @@ export default function VideoWindow({
 }: VideoWindowProps) {
   return (
     <div
-      className="fixed inset-0 bg-black/70 bg-opacity-80 flex items-center justify-center z-50"
+      className="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black/70"
       onClick={onHandleClick}
       role="dialog"
       aria-modal="true"
       aria-label="Movie Trailer"
     >
-      <div className="relative w-[90%] h-[40%] xl:h-[90%] " onClick={(e) => e.stopPropagation()}>
+      <div
+        className="relative h-[40%] w-[90%] xl:h-[90%]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <iframe
-          className="w-full h-full rounded-lg"
+          className="h-full w-full rounded-lg"
           src={videoUrl}
           title="Trailer"
           allowFullScreen
@@ -28,7 +31,7 @@ export default function VideoWindow({
         <button
           onClick={onHandleClick}
           aria-label="Close Trailer"
-          className="cursor-pointer absolute -top-3 -right-3 bg-white/90 hover:bg-white text-black rounded-full p-2 shadow-md transition-transform hover:scale-110"
+          className="absolute -top-3 -right-3 cursor-pointer rounded-full bg-white/90 p-2 text-black shadow-md transition-transform hover:scale-110 hover:bg-white"
         >
           <X size={20} />
         </button>

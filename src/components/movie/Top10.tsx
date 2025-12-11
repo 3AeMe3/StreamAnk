@@ -59,33 +59,27 @@ export default function Top10({ typeMovies = [] }: Top10Props) {
   };
 
   return (
-    <div className=" px-10 my-10 lg:px-35 xl:px-75">
-      <div className="flex items-center gap-4   ">
-        <h3 className="font-bold text-6xl tracking-[-8px] lg:mr-5 lg:tracking-[-15px] lg:text-9xl  ">
-          <span className="text-outline-purple text-black ">T</span>
+    <div className="my-10 px-10 lg:px-35 xl:px-75">
+      <div className="flex items-center gap-4">
+        <h3 className="text-6xl font-bold tracking-[-8px] lg:mr-5 lg:text-9xl lg:tracking-[-15px]">
+          <span className="text-outline-purple text-black">T</span>
           <span className="text-outline-purple text-black">O</span>
           <span className="text-outline-purple text-black">P </span>
           <span className="text-outline-purple text-black">1</span>
           <span className="text-outline-purple text-black">0</span>
         </h3>
-        <span className="text-sm font-semibold tracking-[.5rem] lg:text-lg ">
+        <span className="text-sm font-semibold tracking-[.5rem] lg:text-lg">
           CONTENT <br />
           TODAY
         </span>
       </div>
-      <div className=" my-8 slider-container   ">
+      <div className="slider-container my-8">
         <Slider {...settings}>
           {typeMovies.slice(0, 10)?.map((movie, i) => (
-            <div className="px-2 ">
+            <div className="px-2">
               <MovieCard
                 key={movie.id}
                 title={movie.title}
-                tag={
-                  movie.media_type
-                    ? movie.media_type[0].toUpperCase() +
-                      movie.media_type.slice(1)
-                    : "Movie"
-                }
                 rating={` ${movie?.vote_average.toFixed(1)}/10`}
                 top10
                 topIndex={i + 1}

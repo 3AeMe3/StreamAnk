@@ -60,10 +60,10 @@ export default function MovieRow({ title, typeMovies = [] }: MovieRowProps) {
   const navigate = useNavigate();
 
   return (
-    <div className=" px-10 my-10 lg:px-35 xl:px-45">
-      <div className="flex justify-between relative">
+    <div className="my-10 px-10 lg:px-35 xl:px-45">
+      <div className="relative flex justify-between">
         <h3 className="font-bold lg:text-2xl">
-          <span className="w-1 h-1 bg-violet-500 text-violet-500">|</span>{" "}
+          <span className="h-1 w-1 bg-violet-500 text-violet-500">|</span>{" "}
           {title}
         </h3>
       </div>
@@ -71,14 +71,15 @@ export default function MovieRow({ title, typeMovies = [] }: MovieRowProps) {
       <div className="my-8">
         <Slider {...settings}>
           {typeMovies?.slice(0, 10).map((movie) => (
-            <div key={movie.id} className="px-2 !w-auto">
+            <div key={movie.id} className="!w-auto px-2">
               <MovieCard
                 title={movie.title}
-                tag="Movie"
                 rating={`${movie.vote_average.toFixed(1)}/10`}
                 image={`${IMAGE_BASE_URL}w300${movie.poster_path}`}
                 handleClick={() =>
-                  navigate(`/movie/${movie?.id}`, { state: { movie } })
+                  navigate(`/movie/${movie.id}`, {
+                    state: { movie },
+                  })
                 }
               />
             </div>

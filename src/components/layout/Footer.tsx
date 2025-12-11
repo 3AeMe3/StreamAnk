@@ -3,7 +3,7 @@ import { Linkedin, Github } from "lucide-react";
 export default function Footer() {
   return (
     <footer>
-      <div className="flex justify-center items-center flex-col gap-4 py-10">
+      <div className="flex flex-col items-center justify-center gap-4 py-10">
         <h3 className="text-2xl font-bold">AnkStrem</h3>
         <nav aria-label="Enlaces del footer">
           <ul className="flex gap-4">

@@ -37,11 +37,11 @@ export default function Button({
   return (
     <button
       onClick={onHandleClick}
-      className={`  flex justify-center items-center  gap-1 cursor-pointer backdrop-blur-sm  border-1 border-white/25 bg-black/20 hover:scale-105 ${
+      className={`flex cursor-pointer items-center justify-center gap-1 border-1 border-white/25 bg-black/20 backdrop-blur-sm hover:scale-105 ${
         play && "bg-white"
-      }    ${isCircle ? "rounded-full" : "rounded-xl"} ${
-        isCircle ? "aspect-square p-2 " : "px-2 py-[3px] gap-2"
-      }   ${sizeMap[size]}`}
+      } ${isCircle ? "rounded-full" : "rounded-xl"} ${
+        isCircle ? "aspect-square p-2" : "gap-2 px-2 py-[3px]"
+      } ${sizeMap[size]}`}
     >
       {Icon && <Icon size={iconSize} color={iconColor} fill={iconFill} />}
 

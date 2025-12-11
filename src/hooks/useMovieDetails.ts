@@ -37,7 +37,7 @@ export const useMovieDetails = (id?: string) => {
         setFind(movieData);
       } catch (error) {
         setErrorMessage(
-          `failed to fecth movies. please try again later: ${error} `
+          `failed to fecth movies. please try again later: ${error} `,
         );
       } finally {
         setIsLoading(false);
