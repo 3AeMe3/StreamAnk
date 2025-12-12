@@ -5,8 +5,6 @@ import type { Movie } from "../../interfaces/movie";
 //Swiper
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-// import "swiper/css";
 
 interface Top10Props {
   typeMovies: Movie[];

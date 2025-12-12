@@ -5,7 +5,6 @@ import type { Movie } from "../../interfaces/movie";
 
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 
 // Carousel
 interface MovieRowProps {

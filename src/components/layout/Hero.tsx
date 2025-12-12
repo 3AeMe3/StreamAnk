@@ -9,7 +9,6 @@ import type { Movie } from "../../interfaces/movie";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import "swiper/css";
 
 interface HeroProps {
   heroMovies?: Movie[];

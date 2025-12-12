@@ -280,7 +280,7 @@
 
 /* swiper carousel */
 
-.swiper-button-prev {
+/* .swiper-button-prev {
   position: absolute;
   cursor: pointer;
   left: 5px;
@@ -318,4 +318,4 @@
   .swiper-button-prev {
     display: none !important;
   }
-}
+} */
