@@ -102,13 +102,13 @@ export default function MovieDetail() {
         url={String(trailerUrl)}
       ></SEO>
       <div className="relative h-[80vh] overflow-hidden">
-        <div className="h-full mask-b-from-90% mask-b-to-100%">
+        <div className="relative h-full mask-b-from-90% mask-b-to-100%">
           {trailerId ? (
             <YouTube
               videoId={trailerId}
               opts={opts}
               onReady={onPlayerReady}
-              className="absolute bottom-40 h-full w-full"
+              className="flex h-[80dvh] items-center justify object-cover"
               iframeClassName=""
             />
           ) : (

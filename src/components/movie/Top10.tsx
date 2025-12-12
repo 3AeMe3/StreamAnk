@@ -2,9 +2,11 @@ import MovieCard from "./MovieCard";
 import { IMAGE_BASE_URL } from "../../services/tmdb";
 import { useNavigate } from "react-router";
 import type { Movie } from "../../interfaces/movie";
-import Slider from "react-slick";
-import NextArrow from "../ui/Slider/NextArrow";
-import PrevArrow from "../ui/Slider/PrevArrow";
+//Swiper
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+// import "swiper/css";
 
 interface Top10Props {
   typeMovies: Movie[];
@@ -12,51 +14,6 @@ interface Top10Props {
 
 export default function Top10({ typeMovies = [] }: Top10Props) {
   const navigate = useNavigate();
-
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 3,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1280, // laptops y desktop pequeños
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 3,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 3,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 750,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-
-      {
-        breakpoint: 650,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-    ],
-  };
 
   return (
     <div className="my-10 px-10 lg:px-35 xl:px-75">
@@ -73,10 +30,21 @@ export default function Top10({ typeMovies = [] }: Top10Props) {
           TODAY
         </span>
       </div>
-      <div className="slider-container my-8">
-        <Slider {...settings}>
+      <div className="my-8">
+        <Swiper
+          modules={[Navigation]}
+          navigation={{ enabled: true }}
+          slidesPerView={1.3}
+          breakpoints={{
+            320: { slidesPerView: 2, spaceBetween: 10 },
+            480: { slidesPerView: 3, spaceBetween: 10 },
+            640: { slidesPerView: 4, spaceBetween: 15 },
+            768: { slidesPerView: 5, spaceBetween: 15 },
+            1024: { slidesPerView: 6, spaceBetween: 20 },
+          }}
+        >
           {typeMovies.slice(0, 10)?.map((movie, i) => (
-            <div className="px-2">
+            <SwiperSlide key={movie.id} className="px-2">
               <MovieCard
                 key={movie.id}
                 title={movie.title}
@@ -88,9 +56,9 @@ export default function Top10({ typeMovies = [] }: Top10Props) {
                   navigate(`/movie/${movie?.id}`, { state: { movie } })
                 }
               ></MovieCard>
-            </div>
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </div>
     </div>
   );

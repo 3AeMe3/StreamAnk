@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { CalendarDays, Star, Play, Info, type LucideIcon } from "lucide-react";
-import Slider from "react-slick";
 
 import VideoWindow from "../movie/VideoWindow";
 import Button from "../ui/Button";
 import { IMAGE_BASE_URL, fetchMovieTrailer } from "../../services/tmdb";
 import type { Movie } from "../../interfaces/movie";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 interface HeroProps {
   heroMovies?: Movie[];
@@ -21,19 +24,6 @@ interface HeroTagProps {
 
 export default function Hero({ heroMovies }: HeroProps) {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    accessibility: false,
-    autoplay: true,
-    autoplaySpeed: 4000,
-    pauseOnHover: true,
-    arrows: false,
-  };
 
   // Componente pequeño para tags del Hero
   const Tag = ({ Icon, iconFill, iconColor, children }: HeroTagProps) => (
@@ -109,11 +99,13 @@ export default function Hero({ heroMovies }: HeroProps) {
 
   return (
     <section className="h-[90vh]">
-      <Slider {...settings}>
+      <Swiper modules={[Autoplay]} autoplay={{ delay: 3000 }}>
         {heroMovies?.slice(0, 5).map((movie) => (
-          <HeroSlide key={movie.id} movie={movie} />
+          <SwiperSlide>
+            <HeroSlide key={movie.id} movie={movie} />
+          </SwiperSlide>
         ))}
-      </Slider>
+      </Swiper>
 
       {videoUrl && (
         <VideoWindow
