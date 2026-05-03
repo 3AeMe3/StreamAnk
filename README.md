@@ -18,10 +18,6 @@ El propósito de este proyecto fue profundizar en el **consumo de APIs externas*
 
 ## 🛠️ Tecnologías utilizadas
 
-- [Astro](https://astro.build/) – Framework de sitios estáticos.
-- [GSAP](https://greensock.com/gsap/) – Librería de animaciones.
-- [TailwindCSS](https://tailwindcss.com/) – Framework CSS utilitario.
-
 - [React 19](https://es.react.dev/) – Biblioteca para la construcción de interfaces de usuario
 - [TypeScript](https://www.typescriptlang.org/) – Tipado estático para mayor robustez del código
 - [React Router](https://reactrouter.com/) – Manejo de rutas y navegación
